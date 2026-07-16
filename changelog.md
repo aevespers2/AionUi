@@ -3,20 +3,22 @@
 All notable product, architecture, implementation, release, and deployment changes are recorded here.
 
 ## Unreleased
+
 ### Product
-- Product objectives, MVP scope, priorities, success criteria, and non-goals are maintained by the Product Manager.
+- 2026-07-16 — Made fork/product/distribution identity the blocking product decision for the inherited AionUi 1.7.0 application.
+- 2026-07-16 — Defined the first user outcome as one clearly attributed, reproducible, security-reviewed platform build rather than new feature development.
 
 ### Architecture
-- Architecture decisions and task sequencing are maintained through `taskchain.md`.
+- The active chain now separates upstream provenance, inherited baseline reproduction, packaging/security/accessibility, and later local product changes.
 
 ### Implementation
-- Builder work is tracked through `punchlist.md` when adopted, with verification evidence.
+- Existing application code, scripts, tests, and lockfile are inherited candidate assets and are not recorded as newly completed aevespers2 work.
 
 ### Release
-- Release readiness, versioning, artifacts, and rollback criteria are tracked in `release.md`.
+- Release remains blocked until mirror/fork/derivative status, naming, attribution, supported platform, tests/build, security, SBOM, checksums, provenance, and rollback are approved and verified.
 
 ### Deployment
-- Deployment environments, health checks, validation, and rollback events are tracked in `deploy.md`.
+- No public binary or update channel is authorized before the fork and distribution decision.
 
 ## Entry Format
 - Date
