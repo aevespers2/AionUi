@@ -1,0 +1,12 @@
+title: AionUi Fork Documentation
+description: Architecture, onboarding, security, provenance, and release documentation for the inherited AionUi 1.7.0 repository.
+theme: minima
+markdown: kramdown
+kramdown:
+  input: GFM
+header_pages:
+  - index.md
+  - architecture.md
+  - development.md
+  - security-and-privacy.md
+  - fork-baseline.md
