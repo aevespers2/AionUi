@@ -29,9 +29,9 @@ New AI-provider features, rebranding, public binaries, and broad cross-platform 
 | [Developer onboarding](development.md) | Clean setup, commands, verification workflow, contribution discipline, and evidence capture |
 | [Security and privacy](security-and-privacy.md) | Assets, boundaries, inherited risk areas, review checklist, and release-blocking controls |
 | [Fork baseline decision](fork-baseline.md) | P0 decision record, approval matrix, provenance requirements, and consequences of each repository identity |
-| [Task chain](../taskchain.md) | Architect-controlled execution order and acceptance criteria |
-| [Release plan](../release.md) | Candidate scope, release gates, artifact requirements, and rollback criteria |
-| [Changelog](../changelog.md) | Product, architecture, documentation, release, and deployment history |
+| [Task chain](https://github.com/aevespers2/AionUi/blob/main/taskchain.md) | Architect-controlled execution order and acceptance criteria |
+| [Release plan](https://github.com/aevespers2/AionUi/blob/main/release.md) | Candidate scope, release gates, artifact requirements, and rollback criteria |
+| [Changelog](https://github.com/aevespers2/AionUi/blob/main/changelog.md) | Product, architecture, documentation, release, and deployment history |
 
 ## Observed runtime shape
 
