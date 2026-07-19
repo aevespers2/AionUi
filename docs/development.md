@@ -11,9 +11,9 @@ This guide supports review and maintenance of the inherited AionUi `1.7.0` codeb
 
 Read these files in order:
 
-1. [`taskchain.md`](../taskchain.md) — active objective, dependency order, acceptance criteria, and non-goals;
-2. [`release.md`](../release.md) — blocked gates, candidate evidence, artifacts, and rollback criteria;
-3. [`changelog.md`](../changelog.md) — inherited/local distinction and recorded product decisions;
+1. [`taskchain.md`](https://github.com/aevespers2/AionUi/blob/main/taskchain.md) — active objective, dependency order, acceptance criteria, and non-goals;
+2. [`release.md`](https://github.com/aevespers2/AionUi/blob/main/release.md) — blocked gates, candidate evidence, artifacts, and rollback criteria;
+3. [`changelog.md`](https://github.com/aevespers2/AionUi/blob/main/changelog.md) — inherited/local distinction and recorded product decisions;
 4. [`fork-baseline.md`](fork-baseline.md) — unresolved repository identity and provenance decision;
 5. [`architecture.md`](architecture.md) — process boundaries and design invariants;
 6. [`security-and-privacy.md`](security-and-privacy.md) — assets and review controls.
