@@ -9,6 +9,12 @@ AionUi is an inherited Electron application that presents command-line AI agents
 
 > **Release status: blocked.** No aevespers2 binary, update channel, or cross-platform support claim is approved until the fork identity, exact upstream baseline, naming, platform scope, distribution channel, verification evidence, and rollback plan are accepted.
 
+## Static portfolio console
+
+[Open the AionUi Portfolio Console](console/)
+
+The console is a browser-safe GitHub Pages demonstration surface. It provides AionUi-style navigation, public repository metadata, portfolio roles, architectural boundaries, and future adapter seams. It does **not** run the Electron main process, WebSocket/Express backend, local files, SQLite, command-line agents, MCP processes, credentials, model providers, repository writes, releases, or deployments.
+
 ## Current objective
 
 The active P0 objective is deliberately narrow:
@@ -25,6 +31,7 @@ New AI-provider features, rebranding, public binaries, and broad cross-platform 
 
 | Guide | Purpose |
 |---|---|
+| [Portfolio console](console/) | Static AionUi-style shell wired to public repository metadata and bounded future integration points |
 | [Architecture](architecture.md) | Runtime processes, adapters, data flows, storage, WebUI, packaging, and trust boundaries |
 | [Developer onboarding](development.md) | Clean setup, commands, verification workflow, contribution discipline, and evidence capture |
 | [Security and privacy](security-and-privacy.md) | Assets, boundaries, inherited risk areas, review checklist, and release-blocking controls |
@@ -61,9 +68,10 @@ The desktop and WebUI surfaces share a bridge abstraction, but they cross differ
 | Desktop | `npm start` | Electron renderer, preload bridge, main process, native modules, filesystem access |
 | Local WebUI | `npm run webui` | Local HTTP/WebSocket server, login/session handling, browser bridge |
 | Remote WebUI | `npm run webui:remote` | Network exposure, authentication, CORS, cookies, TLS/reverse proxy assumptions, host firewall |
+| Static Pages console | GitHub Pages `docs/console/` | Public metadata only; no privileged runtime authority |
 | Packaging | `npm run package`, `npm run make`, or platform distribution scripts | Native dependency rebuilds, code signing, notarization, installer identity, checksums, updater behavior |
 
-These modes are inherited capabilities, not verified support commitments from this fork.
+These modes are inherited capabilities or bounded documentation demonstrations, not verified support commitments from this fork.
 
 ## Repository guardrails
 
@@ -73,6 +81,7 @@ These modes are inherited capabilities, not verified support commitments from th
 - Prefer one verified platform over unverified cross-platform claims.
 - Treat API keys, session tokens, local conversation data, filesystem access, remote WebUI, updates, and generated artifacts as security-sensitive.
 - Keep patches bounded, reviewable, reversible, and tied to commands and evidence.
+- Keep the Pages console read-only and credential-free.
 - Stop when the requested change depends on an unresolved fork identity or distribution decision.
 
 ## Baseline release gates
@@ -90,4 +99,4 @@ A candidate remains blocked until all of the following are evidenced at one immu
 
 ## Documentation status
 
-This site documents the observed inherited architecture and the controls required to evaluate it. It does **not** approve a fork identity, certify security, promise support for a platform, or authorize distribution.
+This site documents the observed inherited architecture and the controls required to evaluate it. The static console is a safe demonstration and integration scaffold; it does **not** approve a fork identity, certify security, promise support for a platform, authorize backend connections, or authorize distribution.
