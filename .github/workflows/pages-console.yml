@@ -1,22 +1,22 @@
-name: AionUi Pages Console
+name: AionUi Pages Console Validation
 
 on:
+  pull_request:
+    paths:
+      - "docs/**"
+      - ".github/workflows/pages-console.yml"
   push:
     branches: [main]
     paths:
-      - 'docs/**'
-      - '.github/workflows/pages-console.yml'
-  pull_request:
-    paths:
-      - 'docs/**'
-      - '.github/workflows/pages-console.yml'
+      - "docs/**"
+      - ".github/workflows/pages-console.yml"
   workflow_dispatch:
 
 permissions:
   contents: read
 
 concurrency:
-  group: pages-console-${{ github.ref }}
+  group: pages-console-validation-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -24,11 +24,26 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
+      - name: Check out exact candidate
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
         with:
+          ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
           persist-credentials: false
-      - name: Validate console files
+
+      - name: Verify exact head
+        env:
+          EXPECTED_SHA: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+
+      - name: Validate console and documentation files
+        shell: bash
         run: |
+          set -euo pipefail
+          test -f docs/index.md
+          test -f docs/architecture.md
+          test -f docs/development.md
+          test -f docs/security-and-privacy.md
+          test -f docs/fork-baseline.md
           test -f docs/console/index.html
           test -f docs/console/styles.css
           test -f docs/console/app.js
@@ -36,30 +51,47 @@ jobs:
           grep -q 'Static Pages mode' docs/console/index.html
           grep -q 'api.github.com/repos' docs/console/app.js
 
-  build-pages:
-    if: github.event_name != 'pull_request'
-    needs: validate
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - uses: actions/checkout@v4
+      - name: Check local Markdown links
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import re
+          from pathlib import Path
+
+          root = Path("docs")
+          missing = []
+          pattern = re.compile(r"\[[^\]]+\]\(([^)]+)\)")
+          for source in root.rglob("*.md"):
+              text = source.read_text(encoding="utf-8")
+              for target in pattern.findall(text):
+                  if target.startswith(("http://", "https://", "mailto:", "#")):
+                      continue
+                  clean = target.split("#", 1)[0].split("?", 1)[0]
+                  if not clean:
+                      continue
+                  resolved = (source.parent / clean).resolve()
+                  if not resolved.exists():
+                      missing.append(f"{source}: {target}")
+          if missing:
+              raise SystemExit("Missing local links:\n" + "\n".join(missing))
+          PY
+
+      - name: Record validation evidence
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p reports/pages-console-validation
+          git rev-parse HEAD > reports/pages-console-validation/exact-head.txt
+          python --version > reports/pages-console-validation/python-version.txt 2>&1
+          sha256sum docs/console/index.html docs/console/styles.css docs/console/app.js docs/console/portfolio.json > reports/pages-console-validation/SHA256SUMS
+
+      - name: Upload validation evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          persist-credentials: false
-      - uses: actions/configure-pages@v5
-      - uses: actions/jekyll-build-pages@v1
-        with:
-          source: ./docs
-          destination: ./_site
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./_site
-      - name: Deploy GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          name: pages-console-validation-${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
+          path: reports/pages-console-validation
+          if-no-files-found: error
+          retention-days: 30
