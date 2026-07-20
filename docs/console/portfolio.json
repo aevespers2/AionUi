@@ -1,0 +1,21 @@
+{
+  "owner": "aevespers2",
+  "generated_for": "AionUi static GitHub Pages console",
+  "repositories": [
+    {"name":"AionUi","role":"Desktop and WebUI interface candidate","status":"architectural decision required","featured":true},
+    {"name":"0","role":"Constrained autonomous engineering runtime","status":"pre-release","featured":true},
+    {"name":"Bridge","role":"Evidence and validation boundary","status":"pre-release","featured":true},
+    {"name":"QuantumStateObjects","role":"Bounded QSO runtime and evidence","status":"pre-release","featured":true},
+    {"name":"QSO-FABRIC","role":"Four-QSO experiment fabric","status":"pre-release","featured":true},
+    {"name":"QSO-GENOMES","role":"Declarative genomes and compatibility contracts","status":"pre-release","featured":true},
+    {"name":"QSO-SEEKER","role":"Read-only retrieval and hostile-input boundary","status":"pre-release","featured":true},
+    {"name":"QSO-PAYMENTS","role":"Payment-intent and distribution documentation","status":"documentation-only","featured":false},
+    {"name":"QSO-STUDIO","role":"Read-only evidence review interface","status":"documentation-only","featured":false},
+    {"name":"QSO-DIGITALIS","role":"Digitalis charter candidate","status":"architectural hold","featured":false},
+    {"name":"qso-field.github.io","role":"Public QSO portfolio documentation","status":"documentation-first","featured":false},
+    {"name":"datarepo-temporal-invariants","role":"Temporal-invariants overlay evaluation","status":"identity decision required","featured":false},
+    {"name":"JusticeForMe","role":"Static evidence and system review surface","status":"pre-release","featured":false},
+    {"name":"qsio-kernel","role":"Deterministic in-memory QSIO kernel","status":"pre-release","featured":false},
+    {"name":"1","role":"Repository state and quarantine design","status":"architectural clarification required","featured":false}
+  ]
+}
