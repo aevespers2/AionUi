@@ -4,11 +4,17 @@ on:
   pull_request:
     paths:
       - "docs/**"
+      - "taskchain.md"
+      - "release.md"
+      - "changelog.md"
       - ".github/workflows/pages-console.yml"
   push:
     branches: [main]
     paths:
       - "docs/**"
+      - "taskchain.md"
+      - "release.md"
+      - "changelog.md"
       - ".github/workflows/pages-console.yml"
   workflow_dispatch:
 
@@ -39,6 +45,9 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          test -f taskchain.md
+          test -f release.md
+          test -f changelog.md
           test -f docs/index.md
           test -f docs/architecture.md
           test -f docs/development.md
@@ -50,6 +59,8 @@ jobs:
           python -m json.tool docs/console/portfolio.json >/dev/null
           grep -q 'Static Pages mode' docs/console/index.html
           grep -q 'api.github.com/repos' docs/console/app.js
+          grep -q 'BLOCKED — FORK AND DISTRIBUTION APPROVAL REQUIRED' release.md
+          grep -q 'P0.*BLOCKED' taskchain.md
 
       - name: Check local Markdown links
         shell: bash
@@ -85,7 +96,15 @@ jobs:
           mkdir -p reports/pages-console-validation
           git rev-parse HEAD > reports/pages-console-validation/exact-head.txt
           python --version > reports/pages-console-validation/python-version.txt 2>&1
-          sha256sum docs/console/index.html docs/console/styles.css docs/console/app.js docs/console/portfolio.json > reports/pages-console-validation/SHA256SUMS
+          sha256sum \
+            taskchain.md \
+            release.md \
+            changelog.md \
+            docs/console/index.html \
+            docs/console/styles.css \
+            docs/console/app.js \
+            docs/console/portfolio.json \
+            > reports/pages-console-validation/SHA256SUMS
 
       - name: Upload validation evidence
         if: always()
