@@ -29,4 +29,7 @@ Architect-controlled execution chain for the existing AionUi 1.7.0 application. 
 
 ## Builder Log
 
+- 2026-07-19 — Prepared the documentation-only candidate in draft PR #1: project overview, architecture and trust-boundary guidance, Mermaid diagrams, developer onboarding, security/privacy review model, fork-baseline decision record, and an isolated static portfolio console under `docs/console/`. No inherited application implementation or release gate was changed.
+- 2026-07-20 — Exact-head Pages Console Validation run `29712123942` passed at `d9269277999ff0640497ee3bdc00020dc61f9a84`, including submitted-source identity, required-file and JSON checks, local Markdown-link validation, SHA-256 evidence generation, and retained artifact upload. Artifact digest: `sha256:a42adcf6a4dbdf1a9452a6c59607e1ec2d8f8455505068922413100f7c2fe53a`. Jekyll rendering, browser accessibility/responsiveness, and Pages publication remain separate pending checks.
+
 Record approvals, upstream/local commits, install/build/test commands, platform details, artifact hashes, security/accessibility findings, rollback evidence, and follow-ups.
