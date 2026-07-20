@@ -4,7 +4,7 @@
 
 Status: `BLOCKED — FORK AND DISTRIBUTION APPROVAL REQUIRED`
 
-AionUi contains an existing Electron application identified as version `1.7.0`, with a lockfile, build/package commands, linting, formatting, Jest suites, and cross-platform distribution scripts. No aevespers2 release is eligible because P0 is blocked on approval of mirror/fork/derivative identity, `punchlist.md` is absent, inherited and local work are not separated, and the reviewed implementation baseline lacks current install, build, test, security, accessibility, provenance, signing, and rollback evidence. A fork-specific documentation package now describes the observed architecture, onboarding path, security/privacy review surface, and P0 decision requirements, but it does not change any release gate to PASS.
+AionUi contains an existing Electron application identified as version `1.7.0`, with a lockfile, build/package commands, linting, formatting, Jest suites, and cross-platform distribution scripts. No aevespers2 application release is eligible because P0 is blocked on approval of mirror/fork/derivative identity, `punchlist.md` is absent, inherited and local work are not separated, and the reviewed implementation baseline lacks current install, build, test, security, accessibility, provenance, signing, and rollback evidence. A fork-specific documentation package and static GitHub Pages portfolio console now describe the observed architecture, onboarding path, security/privacy review surface, P0 decision requirements, public repository metadata, and future integration seams, but they do not change any application release gate to PASS.
 
 ## Versioning
 
@@ -12,6 +12,7 @@ AionUi contains an existing Electron application identified as version `1.7.0`, 
 - Approve mirror, maintained fork, or independently distributed derivative status before tagging.
 - A documentation-only baseline may use `1.7.0-aevespers.1` after provenance and naming approval.
 - Functional changes must be versioned and attributed against the approved upstream baseline.
+- The static Pages console is a documentation/demo artifact and is not assigned an application version.
 
 ## Release Scope
 
@@ -22,8 +23,10 @@ AionUi contains an existing Electron application identified as version `1.7.0`, 
 
 ## Selected Completed Work
 
-- Documentation-only candidate: GitHub Pages overview, architecture, developer onboarding, security/privacy review model, fork-baseline decision record, and diagrams.
-- No implementation, build, test, security, accessibility, packaging, or release work is selected as complete.
+- Documentation-only candidate: GitHub Pages overview, architecture, developer onboarding, security/privacy review model, fork-baseline decision record, diagrams, and static portfolio console.
+- Static console boundary: public GitHub metadata and repository navigation only; no backend credentials, local files, SQLite, CLI agents, MCP processes, model calls, writes, releases, or deployments.
+- Least-privilege validation/deployment workflow for `docs/` static assets, subject to GitHub Pages repository settings and successful review.
+- No inherited application implementation, build, test, security, accessibility, packaging, or release work is selected as complete.
 - The inherited `1.7.0` implementation and scripts remain candidate inputs, not newly completed aevespers2 work.
 
 ## Planned Changelog Entries
@@ -45,7 +48,8 @@ AionUi contains an existing Electron application identified as version `1.7.0`, 
 | Tests/static | NO CURRENT EVIDENCE | Lint, format, unit, contract, integration, and primary smoke tests pass. |
 | Security | NO CURRENT EVIDENCE | Electron, credentials, local data, network, updater, parser, dependency, secret, and CI checks pass. |
 | Accessibility | NO CURRENT EVIDENCE | Keyboard, focus, labels, contrast, scaling, and error states are verified. |
-| Documentation | PARTIAL | Fork-specific overview, architecture, onboarding, security/privacy review, and decision guidance exist; approved identity, supported matrix, verified workflows, final privacy/support statements, signing, and rollback evidence remain incomplete. |
+| Documentation | PARTIAL | Overview, architecture, onboarding, security/privacy review, decision guidance, and static console exist; approved identity, supported matrix, verified workflows, final privacy/support statements, signing, and rollback evidence remain incomplete. |
+| Static Pages validation | PENDING | Console files, JSON configuration, Jekyll build, links, keyboard navigation, responsive behavior, and deployment artifact are verified at the exact candidate head. |
 | Provenance | NO EVIDENCE | Upstream/candidate commits, Node/npm/OS versions, commands, artifacts, hashes, SBOM, and attestations are recorded. |
 | Approval | PENDING | Explicit release approval after all blocking gates pass. |
 
@@ -55,10 +59,11 @@ AionUi contains an existing Electron application identified as version `1.7.0`, 
 - Reproducible source archive and one approved platform artifact.
 - Complete lint, format, test, build, smoke, accessibility, and security reports.
 - Signing/notarization status, SBOM, SHA-256 checksums, and provenance manifest.
+- For Pages only: exact-head static-site build evidence and deployed artifact digest.
 
 ## Rollback Criteria
 
-Withdraw or roll back if attribution or identity is unclear, the primary workflow fails, the artifact is non-reproducible, credentials or local data are exposed, Electron/network/updater boundaries are unsafe, accessibility blocks use, signing behavior is invalid, or hashes differ. Restore the recorded upstream baseline or previous verified fork tag and preserve failed-candidate evidence.
+Withdraw or roll back if attribution or identity is unclear, the primary workflow fails, the artifact is non-reproducible, credentials or local data are exposed, Electron/network/updater boundaries are unsafe, accessibility blocks use, signing behavior is invalid, or hashes differ. Restore the recorded upstream baseline or previous verified fork tag and preserve failed-candidate evidence. The static console can be rolled back independently by reverting its documentation commits or disabling the Pages workflow; it must never be treated as a substitute for restoring the application runtime.
 
 ## Unresolved Blockers
 
@@ -67,8 +72,10 @@ Withdraw or roll back if attribution or identity is unclear, the primary workflo
 - `punchlist.md` and accepted local Builder evidence are absent.
 - No current clean install, lint, format, test, build, accessibility, security, signing, SBOM, or provenance bundle exists.
 - Existing upstream `1.7.0` history must not be represented as newly created aevespers2 work.
+- A privileged web backend is not approved; GitHub Pages remains read-only and credential-free.
 
 ## Release Log
 
 - 2026-07-16: Aligned the candidate with the fork-identity gate; release remained blocked pending identity approval and a reproduced platform baseline.
 - 2026-07-19: Added a fork-specific documentation baseline and review diagrams; release remains blocked and no implementation or verification gate changed to PASS.
+- 2026-07-19: Added a static AionUi portfolio console and Pages workflow; this is a documentation/demo milestone only and does not authorize or release the Electron/WebUI application.
