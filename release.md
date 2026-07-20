@@ -25,7 +25,7 @@ AionUi contains an existing Electron application identified as version `1.7.0`, 
 
 - Documentation-only candidate: GitHub Pages overview, architecture, developer onboarding, security/privacy review model, fork-baseline decision record, diagrams, and static portfolio console.
 - Static console boundary: public GitHub metadata and repository navigation only; no backend credentials, local files, SQLite, CLI agents, MCP processes, model calls, writes, releases, or deployments.
-- Least-privilege validation/deployment workflow for `docs/` static assets, subject to GitHub Pages repository settings and successful review.
+- Least-privilege exact-head validation workflow for `docs/` static assets, subject to GitHub Pages repository settings and successful review before publication.
 - No inherited application implementation, build, test, security, accessibility, packaging, or release work is selected as complete.
 - The inherited `1.7.0` implementation and scripts remain candidate inputs, not newly completed aevespers2 work.
 
@@ -49,7 +49,7 @@ AionUi contains an existing Electron application identified as version `1.7.0`, 
 | Security | NO CURRENT EVIDENCE | Electron, credentials, local data, network, updater, parser, dependency, secret, and CI checks pass. |
 | Accessibility | NO CURRENT EVIDENCE | Keyboard, focus, labels, contrast, scaling, and error states are verified. |
 | Documentation | PARTIAL | Overview, architecture, onboarding, security/privacy review, decision guidance, and static console exist; approved identity, supported matrix, verified workflows, final privacy/support statements, signing, and rollback evidence remain incomplete. |
-| Static Pages validation | PENDING | Console files, JSON configuration, Jekyll build, links, keyboard navigation, responsive behavior, and deployment artifact are verified at the exact candidate head. |
+| Static Pages validation | PARTIAL | Exact-head checkout, required console/documentation files, JSON syntax, local Markdown links, SHA-256 evidence, and retained artifact upload passed at `d9269277999ff0640497ee3bdc00020dc61f9a84`; Jekyll rendering, browser keyboard/responsive checks, and Pages publication remain pending. |
 | Provenance | NO EVIDENCE | Upstream/candidate commits, Node/npm/OS versions, commands, artifacts, hashes, SBOM, and attestations are recorded. |
 | Approval | PENDING | Explicit release approval after all blocking gates pass. |
 
@@ -78,4 +78,5 @@ Withdraw or roll back if attribution or identity is unclear, the primary workflo
 
 - 2026-07-16: Aligned the candidate with the fork-identity gate; release remained blocked pending identity approval and a reproduced platform baseline.
 - 2026-07-19: Added a fork-specific documentation baseline and review diagrams; release remains blocked and no implementation or verification gate changed to PASS.
-- 2026-07-19: Added a static AionUi portfolio console and Pages workflow; this is a documentation/demo milestone only and does not authorize or release the Electron/WebUI application.
+- 2026-07-19: Added a static AionUi portfolio console and Pages validation workflow; this is a documentation/demo milestone only and does not authorize or release the Electron/WebUI application.
+- 2026-07-20: Exact-head validation run `29712123942` passed required-file, JSON, link, evidence-generation, and artifact-retention checks at `d9269277999ff0640497ee3bdc00020dc61f9a84`; artifact digest `sha256:a42adcf6a4dbdf1a9452a6c59607e1ec2d8f8455505068922413100f7c2fe53a`. Remaining Pages rendering, browser, and publication checks stay pending.
