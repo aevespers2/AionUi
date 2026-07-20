@@ -20,6 +20,7 @@ All notable product, architecture, implementation, release, and deployment chang
 - 2026-07-19 — Clarified that the inherited repository uses multiple persistence mechanisms and that WebUI remote access is a distinct deployment and security boundary.
 - 2026-07-19 — Preserved the P0 architectural hold: the documentation does not approve a mirror/fork/derivative identity, public binaries, supported platforms, or release readiness.
 - 2026-07-19 — Added an accessible responsive AionUi-style console with repository directory, portfolio roles, capability boundaries, architecture guidance, session-only activity log, and disabled backend configuration seam.
+- 2026-07-20 — Recorded exact-head validation evidence in `taskchain.md` and reconciled release claims with what the workflow actually verifies; Jekyll rendering, browser checks, and Pages publication remain explicitly pending.
 
 ### Implementation
 - Existing application code, scripts, tests, and lockfile are inherited candidate assets and are not recorded as newly completed aevespers2 work.
@@ -28,11 +29,12 @@ All notable product, architecture, implementation, release, and deployment chang
 ### Release
 - Release remains blocked until mirror/fork/derivative status, naming, attribution, supported platform, tests/build, security, SBOM, checksums, provenance, and rollback are approved and verified.
 - The static console is not an AionUi application release and does not satisfy desktop or WebUI acceptance gates.
+- 2026-07-20 — Pages Console Validation run `29712123942` passed exact-source, required-file, JSON, local-link, evidence-generation, and artifact-retention checks at `d9269277999ff0640497ee3bdc00020dc61f9a84`; artifact digest `sha256:a42adcf6a4dbdf1a9452a6c59607e1ec2d8f8455505068922413100f7c2fe53a`.
 
 ### Deployment
 - No public binary or update channel is authorized before the fork and distribution decision.
 - GitHub Pages content is prepared under `docs/`; publication configuration remains a repository setting and does not constitute an Electron/WebUI application deployment.
-- Added a least-privilege Pages validation and deployment workflow for static documentation and console assets; deployment remains dependent on repository Pages settings and branch merge.
+- Added a least-privilege Pages validation workflow for static documentation and console assets; deployment remains dependent on repository Pages settings, review, and branch merge.
 
 ## Entry Format
 - Date
