@@ -5,6 +5,7 @@ on:
     paths:
       - "docs/**"
       - "taskchain.md"
+      - "punchlist.md"
       - "release.md"
       - "changelog.md"
       - ".github/workflows/pages-console.yml"
@@ -13,6 +14,7 @@ on:
     paths:
       - "docs/**"
       - "taskchain.md"
+      - "punchlist.md"
       - "release.md"
       - "changelog.md"
       - ".github/workflows/pages-console.yml"
@@ -46,10 +48,13 @@ jobs:
         run: |
           set -euo pipefail
           test -f taskchain.md
+          test -f punchlist.md
           test -f release.md
           test -f changelog.md
           test -f docs/index.md
           test -f docs/architecture.md
+          test -f docs/portable-trust-review-profile.md
+          test -f docs/obstruction-and-gluing.md
           test -f docs/development.md
           test -f docs/security-and-privacy.md
           test -f docs/fork-baseline.md
@@ -59,8 +64,10 @@ jobs:
           python -m json.tool docs/console/portfolio.json >/dev/null
           grep -q 'Static Pages mode' docs/console/index.html
           grep -q 'api.github.com/repos' docs/console/app.js
-          grep -q 'BLOCKED — FORK AND DISTRIBUTION APPROVAL REQUIRED' release.md
+          grep -q 'BLOCKED — FORK, REVIEW-ROLE, AND DISTRIBUTION APPROVAL REQUIRED' release.md
           grep -q 'P0.*BLOCKED' taskchain.md
+          grep -q 'Display is not authority' docs/portable-trust-review-profile.md
+          grep -q 'AUI-O18' docs/obstruction-and-gluing.md
 
       - name: Check local Markdown links
         shell: bash
@@ -88,6 +95,35 @@ jobs:
               raise SystemExit("Missing local links:\n" + "\n".join(missing))
           PY
 
+      - name: Validate public portfolio safety
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+
+          forbidden = (
+              "BEGIN PRIVATE KEY",
+              "api_key=",
+              "access_token=",
+              "Authorization: Bearer",
+              "private device inventory",
+          )
+          sources = [
+              Path("docs/console/portfolio.json"),
+              Path("docs/console/index.html"),
+              Path("docs/console/app.js"),
+          ]
+          findings = []
+          for source in sources:
+              text = source.read_text(encoding="utf-8")
+              for marker in forbidden:
+                  if marker in text:
+                      findings.append(f"{source}: forbidden marker {marker!r}")
+          if findings:
+              raise SystemExit("Publication-safety findings:\n" + "\n".join(findings))
+          PY
+
       - name: Record validation evidence
         if: always()
         shell: bash
@@ -98,8 +134,12 @@ jobs:
           python --version > reports/pages-console-validation/python-version.txt 2>&1
           sha256sum \
             taskchain.md \
+            punchlist.md \
             release.md \
             changelog.md \
+            docs/index.md \
+            docs/portable-trust-review-profile.md \
+            docs/obstruction-and-gluing.md \
             docs/console/index.html \
             docs/console/styles.css \
             docs/console/app.js \
