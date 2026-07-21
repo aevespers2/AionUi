@@ -3,6 +3,7 @@ name: AionUi Pages Console Validation
 on:
   pull_request:
     paths:
+      - "README.md"
       - "docs/**"
       - "taskchain.md"
       - "punchlist.md"
@@ -12,6 +13,7 @@ on:
   push:
     branches: [main]
     paths:
+      - "README.md"
       - "docs/**"
       - "taskchain.md"
       - "punchlist.md"
@@ -47,6 +49,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          test -f README.md
           test -f taskchain.md
           test -f punchlist.md
           test -f release.md
@@ -64,6 +67,7 @@ jobs:
           test -f docs/console/styles.css
           test -f docs/console/app.js
           python -m json.tool docs/console/portfolio.json >/dev/null
+          grep -q 'fork and distribution review' README.md
           grep -q 'Static Pages mode' docs/console/index.html
           grep -q 'api.github.com/repos' docs/console/app.js
           grep -q 'BLOCKED — FORK, REVIEW-ROLE, RUNTIME-MODE, AND DISTRIBUTION APPROVAL REQUIRED' release.md
@@ -82,10 +86,10 @@ jobs:
           import re
           from pathlib import Path
 
-          root = Path("docs")
+          roots = [Path("README.md"), *Path("docs").rglob("*.md")]
           missing = []
           pattern = re.compile(r"\[[^\]]+\]\(([^)]+)\)")
-          for source in root.rglob("*.md"):
+          for source in roots:
               text = source.read_text(encoding="utf-8")
               for target in pattern.findall(text):
                   if target.startswith(("http://", "https://", "mailto:", "#")):
@@ -138,6 +142,7 @@ jobs:
           git rev-parse HEAD > reports/pages-console-validation/exact-head.txt
           python --version > reports/pages-console-validation/python-version.txt 2>&1
           sha256sum \
+            README.md \
             taskchain.md \
             punchlist.md \
             release.md \
