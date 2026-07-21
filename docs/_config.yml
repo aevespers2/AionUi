@@ -1,5 +1,5 @@
 title: AionUi Fork Documentation
-description: Architecture, onboarding, security, provenance, release controls, and a static portfolio console for the inherited AionUi 1.7.0 repository.
+description: Architecture, portable-trust review, obstruction analysis, onboarding, security, provenance, release controls, and a static portfolio console for the inherited AionUi 1.7.0 repository.
 theme: minima
 markdown: kramdown
 kramdown:
@@ -7,6 +7,8 @@ kramdown:
 header_pages:
   - index.md
   - architecture.md
+  - portable-trust-review-profile.md
+  - obstruction-and-gluing.md
   - development.md
   - security-and-privacy.md
   - fork-baseline.md
