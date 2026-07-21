@@ -7,17 +7,19 @@ title: AionUi Fork Documentation
 
 AionUi is an inherited Electron application that presents command-line AI agents, model providers, local files, document previews, and WebUI access through a graphical workspace. This repository currently tracks an AionUi `1.7.0` codebase and is being evaluated as a possible mirror, maintained fork, or independently distributed derivative.
 
-> **Release status: blocked.** No aevespers2 binary, update channel, or cross-platform support claim is approved until the fork identity, exact upstream baseline, naming, platform scope, distribution channel, verification evidence, and rollback plan are accepted.
+Within A.L.I.S.T.A.I.R.E., AionUi is also a candidate **human-facing workspace shell** for bounded evidence review. It may eventually host a QSO-STUDIO-compatible adapter that displays portable device-trust observations, Repository `0` proposals, Repository `1` dispositions, capabilities, receipts, corrections, revocations, and recovery checkpoints. Display remains non-authoritative; static Pages remains public, read-only, and credential-free.
+
+> **Release status: blocked.** No aevespers2 binary, update channel, privileged adapter, or cross-platform support claim is approved until the fork identity, exact upstream baseline, naming, platform scope, distribution channel, verification evidence, review-contract ownership, and rollback plan are accepted.
 
 ## Static portfolio console
 
 [Open the AionUi Portfolio Console](console/)
 
-The console is a browser-safe GitHub Pages demonstration surface. It provides AionUi-style navigation, public repository metadata, portfolio roles, architectural boundaries, and future adapter seams. It does **not** run the Electron main process, WebSocket/Express backend, local files, SQLite, command-line agents, MCP processes, credentials, model providers, repository writes, releases, or deployments.
+The console is a browser-safe GitHub Pages demonstration surface. It provides AionUi-style navigation, public repository metadata, portfolio roles, architectural boundaries, and future adapter seams. It does **not** run the Electron main process, WebSocket/Express backend, local files, SQLite, command-line agents, MCP processes, credentials, model providers, device inventories, repository writes, approvals, releases, or deployments.
 
-## Current objective
+## Current objectives
 
-The active P0 objective is deliberately narrow:
+The active P0 objective remains provenance and product identity:
 
 1. identify the exact upstream source and inherited commit history;
 2. approve whether this repository is a mirror, maintained fork, or derivative;
@@ -25,7 +27,15 @@ The active P0 objective is deliberately narrow:
 4. reproduce one supported-platform baseline from a clean environment;
 5. retain install, test, security, accessibility, artifact, provenance, and rollback evidence.
 
-New AI-provider features, rebranding, public binaries, and broad cross-platform claims remain outside the approved scope until that baseline is complete.
+A parallel documentation objective defines AionUi's bounded portfolio role:
+
+1. preserve static Pages as public and non-privileged;
+2. keep observations, interpretations, proposals, capabilities, receipts, dispositions, and annotations independently identified;
+3. share one neutral review/display contract with QSO-STUDIO rather than creating competing approval semantics;
+4. bind device, workspace, repository, commit, platform profile, policy profile, and executor identities independently;
+5. fail closed for stale, replayed, unsupported, private, revoked, partial, or unverifiable state.
+
+New AI-provider features, rebranding, public binaries, privileged portable-trust adapters, and broad cross-platform claims remain outside the approved scope until the applicable gates are complete.
 
 ## Documentation
 
@@ -33,12 +43,37 @@ New AI-provider features, rebranding, public binaries, and broad cross-platform 
 |---|---|
 | [Portfolio console](console/) | Static AionUi-style shell wired to public repository metadata and bounded future integration points |
 | [Architecture](architecture.md) | Runtime processes, adapters, data flows, storage, WebUI, packaging, and trust boundaries |
+| [Portable trust review profile](portable-trust-review-profile.md) | Candidate read-only display role for device observations, proposals, dispositions, capabilities, receipts, corrections, revocations, and recovery |
+| [Obstruction and gluing analysis](obstruction-and-gluing.md) | Cross-repository incompatibilities, pairwise maps, triple-overlap witnesses, and fail-closed fixtures |
 | [Developer onboarding](development.md) | Clean setup, commands, verification workflow, contribution discipline, and evidence capture |
 | [Security and privacy](security-and-privacy.md) | Assets, boundaries, inherited risk areas, review checklist, and release-blocking controls |
 | [Fork baseline decision](fork-baseline.md) | P0 decision record, approval matrix, provenance requirements, and consequences of each repository identity |
-| [Task chain](https://github.com/aevespers2/AionUi/blob/main/taskchain.md) | Architect-controlled execution order and acceptance criteria |
-| [Release plan](https://github.com/aevespers2/AionUi/blob/main/release.md) | Candidate scope, release gates, artifact requirements, and rollback criteria |
-| [Changelog](https://github.com/aevespers2/AionUi/blob/main/changelog.md) | Product, architecture, documentation, release, and deployment history |
+| [Task chain](../taskchain.md) | Architect-controlled execution order and acceptance criteria |
+| [Punch list](../punchlist.md) | Evidence-oriented work items, gluing fixtures, security review, recovery, and stop conditions |
+| [Release plan](../release.md) | Candidate scope, release gates, artifact requirements, and rollback criteria |
+| [Changelog](../changelog.md) | Product, architecture, documentation, release, and deployment history |
+
+## Portfolio review boundary
+
+```mermaid
+flowchart LR
+    A[Observation adapters] --> O[Observation envelopes]
+    O --> Z[Repository 0 proposals]
+    Z --> Q[Repository 1 quarantine and disposition]
+    Q --> C[Capabilities and revocations]
+    C --> E[Bounded executor receipts]
+    E --> R[Repository 1 reconciliation]
+    O --> U[AionUi or QSO-STUDIO review]
+    Z --> U
+    Q --> U
+    C --> U
+    E --> U
+    R --> U
+    U --> H[External human approval record]
+    H -. no ambient authority .-> Q
+```
+
+AionUi may render and annotate these records only through an approved adapter. It does not become an observation producer, capability issuer, executor, canonical-state owner, release authority, or payment authority.
 
 ## Observed runtime shape
 
@@ -71,7 +106,7 @@ The desktop and WebUI surfaces share a bridge abstraction, but they cross differ
 | Static Pages console | GitHub Pages `docs/console/` | Public metadata only; no privileged runtime authority |
 | Packaging | `npm run package`, `npm run make`, or platform distribution scripts | Native dependency rebuilds, code signing, notarization, installer identity, checksums, updater behavior |
 
-These modes are inherited capabilities or bounded documentation demonstrations, not verified support commitments from this fork.
+These modes are inherited capabilities or bounded documentation demonstrations, not verified support commitments from this fork. Each mode requires a distinct data and adapter allowlist; static Pages cannot inherit desktop or WebUI authority.
 
 ## Repository guardrails
 
@@ -79,10 +114,11 @@ These modes are inherited capabilities or bounded documentation demonstrations, 
 - Do not describe inherited AionUi `1.7.0` implementation as newly created aevespers2 work.
 - Use the package lock and exact tool versions for baseline reproduction.
 - Prefer one verified platform over unverified cross-platform claims.
-- Treat API keys, session tokens, local conversation data, filesystem access, remote WebUI, updates, and generated artifacts as security-sensitive.
+- Treat API keys, session tokens, local conversation data, filesystem access, remote WebUI, updates, generated artifacts, device records, and canonical-state views as security-sensitive.
 - Keep patches bounded, reviewable, reversible, and tied to commands and evidence.
-- Keep the Pages console read-only and credential-free.
-- Stop when the requested change depends on an unresolved fork identity or distribution decision.
+- Keep the Pages console read-only, public-data-only, and credential-free.
+- Do not treat display, selection, annotation, export, delivery, or execution success as canonical approval.
+- Stop when the requested change depends on an unresolved fork identity, review-contract owner, capability authority, or distribution decision.
 
 ## Baseline release gates
 
@@ -95,8 +131,10 @@ A candidate remains blocked until all of the following are evidenced at one immu
 - one reproducible platform build or package;
 - Electron, WebUI, credential, storage, network, parser, updater, dependency, secret, and workflow review;
 - keyboard, focus, label, contrast, scaling, and error-state accessibility review;
+- neutral review/display contract and QSO-STUDIO compatibility decision for any portable-trust adapter;
+- privacy, correction, revocation, emergency-stop, cache invalidation, and recovery fixtures;
 - SBOM, signing/notarization status, artifact checksums, provenance manifest, and rollback procedure.
 
 ## Documentation status
 
-This site documents the observed inherited architecture and the controls required to evaluate it. The static console is a safe demonstration and integration scaffold; it does **not** approve a fork identity, certify security, promise support for a platform, authorize backend connections, or authorize distribution.
+This site documents the observed inherited architecture and the controls required to evaluate it. The static console is a safe demonstration and integration scaffold; it does **not** approve a fork identity, certify security, promise support for a platform, authorize backend connections, activate portable-trust review, grant approval authority, or authorize distribution.
