@@ -32,8 +32,10 @@ A parallel documentation objective defines AionUi's bounded portfolio role:
 1. preserve static Pages as public and non-privileged;
 2. keep observations, interpretations, proposals, capabilities, receipts, dispositions, and annotations independently identified;
 3. share one neutral review/display contract with QSO-STUDIO rather than creating competing approval semantics;
-4. bind device, workspace, repository, commit, platform profile, policy profile, and executor identities independently;
-5. fail closed for stale, replayed, unsupported, private, revoked, partial, or unverifiable state.
+4. treat AionUi as an optional host shell rather than the review-contract or canonical-state authority;
+5. bind device, workspace, repository, commit, platform profile, policy profile, and executor identities independently;
+6. keep static Pages, desktop, local WebUI, remote WebUI, and packaging as separate trust and release profiles;
+7. fail closed for stale, replayed, unsupported, private, revoked, partial, or unverifiable state.
 
 New AI-provider features, rebranding, public binaries, privileged portable-trust adapters, and broad cross-platform claims remain outside the approved scope until the applicable gates are complete.
 
@@ -43,7 +45,9 @@ New AI-provider features, rebranding, public binaries, privileged portable-trust
 |---|---|
 | [Portfolio console](console/) | Static AionUi-style shell wired to public repository metadata and bounded future integration points |
 | [Architecture](architecture.md) | Runtime processes, adapters, data flows, storage, WebUI, packaging, and trust boundaries |
+| [Runtime-mode topology](runtime-mode-topology.md) | Separate static Pages, Electron desktop, local WebUI, remote WebUI, and packaging allowlists, evidence, and recovery boundaries |
 | [Portable trust review profile](portable-trust-review-profile.md) | Candidate read-only display role for device observations, proposals, dispositions, capabilities, receipts, corrections, revocations, and recovery |
+| [ADR-0001: host shell and review contract](decisions/0001-host-shell-and-review-contract-boundary.md) | Candidate agreement that QSO-STUDIO owns neutral review semantics while AionUi remains an optional non-authoritative host shell |
 | [Obstruction and gluing analysis](obstruction-and-gluing.md) | Cross-repository incompatibilities, pairwise maps, triple-overlap witnesses, and fail-closed fixtures |
 | [Developer onboarding](development.md) | Clean setup, commands, verification workflow, contribution discipline, and evidence capture |
 | [Security and privacy](security-and-privacy.md) | Assets, boundaries, inherited risk areas, review checklist, and release-blocking controls |
@@ -63,17 +67,18 @@ flowchart LR
     Q --> C[Capabilities and revocations]
     C --> E[Bounded executor receipts]
     E --> R[Repository 1 reconciliation]
-    O --> U[AionUi or QSO-STUDIO review]
-    Z --> U
-    Q --> U
-    C --> U
-    E --> U
-    R --> U
+    O --> S[QSO-STUDIO review contract]
+    Z --> S
+    Q --> S
+    C --> S
+    E --> S
+    R --> S
+    S --> U[AionUi host adapter or native Studio renderer]
     U --> H[External human approval record]
     H -. no ambient authority .-> Q
 ```
 
-AionUi may render and annotate these records only through an approved adapter. It does not become an observation producer, capability issuer, executor, canonical-state owner, release authority, or payment authority.
+AionUi may render and annotate these records only through an approved adapter. It does not become an observation producer, review-contract owner, capability issuer, executor, canonical-state owner, release authority, or payment authority.
 
 ## Observed runtime shape
 
@@ -106,7 +111,7 @@ The desktop and WebUI surfaces share a bridge abstraction, but they cross differ
 | Static Pages console | GitHub Pages `docs/console/` | Public metadata only; no privileged runtime authority |
 | Packaging | `npm run package`, `npm run make`, or platform distribution scripts | Native dependency rebuilds, code signing, notarization, installer identity, checksums, updater behavior |
 
-These modes are inherited capabilities or bounded documentation demonstrations, not verified support commitments from this fork. Each mode requires a distinct data and adapter allowlist; static Pages cannot inherit desktop or WebUI authority.
+These modes are inherited capabilities or bounded documentation demonstrations, not verified support commitments from this fork. Each mode requires a distinct data and adapter allowlist; static Pages cannot inherit desktop or WebUI authority, and local WebUI acceptance cannot imply remote WebUI acceptance.
 
 ## Repository guardrails
 
@@ -117,8 +122,9 @@ These modes are inherited capabilities or bounded documentation demonstrations, 
 - Treat API keys, session tokens, local conversation data, filesystem access, remote WebUI, updates, generated artifacts, device records, and canonical-state views as security-sensitive.
 - Keep patches bounded, reviewable, reversible, and tied to commands and evidence.
 - Keep the Pages console read-only, public-data-only, and credential-free.
-- Do not treat display, selection, annotation, export, delivery, or execution success as canonical approval.
-- Stop when the requested change depends on an unresolved fork identity, review-contract owner, capability authority, or distribution decision.
+- Do not treat display, selection, annotation, export, delivery, authentication, or execution success as canonical approval.
+- Do not allow an inherited process, provider, agent, or filesystem bridge to become ambient authority for a review adapter.
+- Stop when the requested change depends on an unresolved fork identity, review-contract owner, capability authority, runtime topology, or distribution decision.
 
 ## Baseline release gates
 
@@ -132,6 +138,7 @@ A candidate remains blocked until all of the following are evidenced at one immu
 - Electron, WebUI, credential, storage, network, parser, updater, dependency, secret, and workflow review;
 - keyboard, focus, label, contrast, scaling, and error-state accessibility review;
 - neutral review/display contract and QSO-STUDIO compatibility decision for any portable-trust adapter;
+- accepted mode-specific data, adapter, credential, network, storage, incident, and recovery profiles;
 - privacy, correction, revocation, emergency-stop, cache invalidation, and recovery fixtures;
 - SBOM, signing/notarization status, artifact checksums, provenance manifest, and rollback procedure.
 
