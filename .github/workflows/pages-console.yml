@@ -5,6 +5,9 @@ on:
     paths:
       - "README.md"
       - "docs/**"
+      - "fixtures/publication-withdrawal-v1.json"
+      - "scripts/validate_publication_withdrawal_fixture.py"
+      - "tests/test_validate_publication_withdrawal_fixture.py"
       - "taskchain.md"
       - "punchlist.md"
       - "release.md"
@@ -15,6 +18,9 @@ on:
     paths:
       - "README.md"
       - "docs/**"
+      - "fixtures/publication-withdrawal-v1.json"
+      - "scripts/validate_publication_withdrawal_fixture.py"
+      - "tests/test_validate_publication_withdrawal_fixture.py"
       - "taskchain.md"
       - "punchlist.md"
       - "release.md"
@@ -33,17 +39,25 @@ jobs:
   validate:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    env:
+      EXPECTED_SHA: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
+
     steps:
       - name: Check out exact candidate
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
         with:
-          ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
+          ref: ${{ env.EXPECTED_SHA }}
+          fetch-depth: 1
           persist-credentials: false
+          show-progress: false
 
-      - name: Verify exact head
-        env:
-          EXPECTED_SHA: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
-        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - name: Verify exact clean head
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "$EXPECTED_SHA"
+          test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+          test -z "$(git status --porcelain)"
 
       - name: Validate console and documentation files
         shell: bash
@@ -66,6 +80,9 @@ jobs:
           test -f docs/console/index.html
           test -f docs/console/styles.css
           test -f docs/console/app.js
+          test -f fixtures/publication-withdrawal-v1.json
+          test -f scripts/validate_publication_withdrawal_fixture.py
+          test -f tests/test_validate_publication_withdrawal_fixture.py
           python -m json.tool docs/console/portfolio.json >/dev/null
           grep -q 'fork and distribution review' README.md
           grep -q 'Static Pages mode' docs/console/index.html
@@ -77,6 +94,29 @@ jobs:
           grep -q 'QSO-STUDIO owns the candidate domain-neutral review contract' docs/decisions/0001-host-shell-and-review-contract-boundary.md
           grep -q 'Remote WebUI remains blocked' docs/runtime-mode-topology.md
           grep -q 'Static Pages must reject' docs/runtime-mode-topology.md
+
+      - name: Validate shared publication-withdrawal fixture
+        id: publication_fixture
+        continue-on-error: true
+        shell: bash
+        run: |
+          set +e
+          mkdir -p reports/pages-console-validation
+          python -m unittest \
+            tests.test_validate_publication_withdrawal_fixture \
+            -v > reports/pages-console-validation/publication-withdrawal-tests.txt 2>&1
+          test_status=$?
+          cat reports/pages-console-validation/publication-withdrawal-tests.txt
+          validation_status=0
+          if [ "$test_status" -eq 0 ]; then
+            python scripts/validate_publication_withdrawal_fixture.py \
+              --corpus fixtures/publication-withdrawal-v1.json \
+              --report reports/pages-console-validation/publication-withdrawal-report.json
+            validation_status=$?
+          fi
+          status=$(( test_status != 0 || validation_status != 0 ))
+          echo "status=${status}" >> "$GITHUB_OUTPUT"
+          exit "$status"
 
       - name: Check local Markdown links
         shell: bash
@@ -122,6 +162,7 @@ jobs:
               Path("docs/console/portfolio.json"),
               Path("docs/console/index.html"),
               Path("docs/console/app.js"),
+              Path("fixtures/publication-withdrawal-v1.json"),
           ]
           findings = []
           for source in sources:
@@ -141,6 +182,12 @@ jobs:
           mkdir -p reports/pages-console-validation
           git rev-parse HEAD > reports/pages-console-validation/exact-head.txt
           python --version > reports/pages-console-validation/python-version.txt 2>&1
+          {
+            printf 'publication_fixture_status=%s\n' "${{ steps.publication_fixture.outputs.status || 'not-run' }}"
+            printf 'authority_effect=none\n'
+            printf 'publication_effect=none\n'
+            printf 'fixture_class=synthetic-only\n'
+          } > reports/pages-console-validation/run-summary.txt
           sha256sum \
             README.md \
             taskchain.md \
@@ -157,13 +204,21 @@ jobs:
             docs/console/styles.css \
             docs/console/app.js \
             docs/console/portfolio.json \
+            fixtures/publication-withdrawal-v1.json \
+            scripts/validate_publication_withdrawal_fixture.py \
+            tests/test_validate_publication_withdrawal_fixture.py \
             > reports/pages-console-validation/SHA256SUMS
 
       - name: Upload validation evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: pages-console-validation-${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
+          name: pages-console-validation-${{ env.EXPECTED_SHA }}
           path: reports/pages-console-validation
           if-no-files-found: error
           retention-days: 30
+
+      - name: Fail when fixture validation is incomplete
+        if: always()
+        shell: bash
+        run: test "${{ steps.publication_fixture.outputs.status }}" = "0"
