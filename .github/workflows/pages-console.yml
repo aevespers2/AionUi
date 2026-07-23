@@ -1,0 +1,267 @@
+name: AionUi Pages Console Validation
+
+on:
+  pull_request:
+    paths:
+      - "README.md"
+      - "docs/**"
+      - "fixtures/publication-withdrawal-v1.json"
+      - "fixtures/publication-consumer-transition-v1.json"
+      - "scripts/validate_publication_withdrawal_fixture.py"
+      - "scripts/validate_publication_consumer_transition_fixture.py"
+      - "tests/test_validate_publication_withdrawal_fixture.py"
+      - "tests/test_validate_publication_consumer_transition_fixture.py"
+      - "taskchain.md"
+      - "punchlist.md"
+      - "release.md"
+      - "changelog.md"
+      - ".github/workflows/pages-console.yml"
+  push:
+    branches: [main]
+    paths:
+      - "README.md"
+      - "docs/**"
+      - "fixtures/publication-withdrawal-v1.json"
+      - "fixtures/publication-consumer-transition-v1.json"
+      - "scripts/validate_publication_withdrawal_fixture.py"
+      - "scripts/validate_publication_consumer_transition_fixture.py"
+      - "tests/test_validate_publication_withdrawal_fixture.py"
+      - "tests/test_validate_publication_consumer_transition_fixture.py"
+      - "taskchain.md"
+      - "punchlist.md"
+      - "release.md"
+      - "changelog.md"
+      - ".github/workflows/pages-console.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages-console-validation-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      EXPECTED_SHA: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
+
+    steps:
+      - name: Check out exact candidate
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          ref: ${{ env.EXPECTED_SHA }}
+          fetch-depth: 1
+          persist-credentials: false
+          show-progress: false
+
+      - name: Verify exact clean head
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "$EXPECTED_SHA"
+          test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+          test -z "$(git status --porcelain)"
+
+      - name: Validate console and documentation files
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f README.md
+          test -f taskchain.md
+          test -f punchlist.md
+          test -f release.md
+          test -f changelog.md
+          test -f docs/index.md
+          test -f docs/architecture.md
+          test -f docs/runtime-mode-topology.md
+          test -f docs/portable-trust-review-profile.md
+          test -f docs/accessibility-and-review-state.md
+          test -f docs/decisions/0001-host-shell-and-review-contract-boundary.md
+          test -f docs/obstruction-and-gluing.md
+          test -f docs/development.md
+          test -f docs/security-and-privacy.md
+          test -f docs/fork-baseline.md
+          test -f docs/console/index.html
+          test -f docs/console/styles.css
+          test -f docs/console/app.js
+          test -f fixtures/publication-withdrawal-v1.json
+          test -f fixtures/publication-consumer-transition-v1.json
+          test -f scripts/validate_publication_withdrawal_fixture.py
+          test -f scripts/validate_publication_consumer_transition_fixture.py
+          test -f tests/test_validate_publication_withdrawal_fixture.py
+          test -f tests/test_validate_publication_consumer_transition_fixture.py
+          python -m json.tool docs/console/portfolio.json >/dev/null
+          grep -q 'fork and distribution review' README.md
+          grep -q 'Static Pages mode' docs/console/index.html
+          grep -q 'api.github.com/repos' docs/console/app.js
+          grep -q 'BLOCKED — FORK, REVIEW-ROLE, RUNTIME-MODE, ACCESSIBILITY-EVIDENCE, AND DISTRIBUTION APPROVAL REQUIRED' release.md
+          grep -q 'P0.*BLOCKED' taskchain.md
+          grep -q 'Display is not authority' docs/portable-trust-review-profile.md
+          grep -q 'Epistemic and authority-state accessibility assurance' docs/accessibility-and-review-state.md
+          grep -q 'AUI-O18' docs/obstruction-and-gluing.md
+          grep -q 'QSO-STUDIO owns the candidate domain-neutral review contract' docs/decisions/0001-host-shell-and-review-contract-boundary.md
+          grep -q 'Remote WebUI remains blocked' docs/runtime-mode-topology.md
+          grep -q 'Static Pages must reject' docs/runtime-mode-topology.md
+
+      - name: Validate shared publication-withdrawal fixture
+        id: publication_fixture
+        continue-on-error: true
+        shell: bash
+        run: |
+          set +e
+          mkdir -p reports/pages-console-validation
+          python -m unittest \
+            tests.test_validate_publication_withdrawal_fixture \
+            -v > reports/pages-console-validation/publication-withdrawal-tests.txt 2>&1
+          test_status=$?
+          cat reports/pages-console-validation/publication-withdrawal-tests.txt
+          validation_status=0
+          if [ "$test_status" -eq 0 ]; then
+            python scripts/validate_publication_withdrawal_fixture.py \
+              --corpus fixtures/publication-withdrawal-v1.json \
+              --report reports/pages-console-validation/publication-withdrawal-report.json
+            validation_status=$?
+          fi
+          status=$(( test_status != 0 || validation_status != 0 ))
+          echo "status=${status}" >> "$GITHUB_OUTPUT"
+          exit "$status"
+
+      - name: Validate shared publication-consumer transition fixture
+        id: transition_fixture
+        continue-on-error: true
+        shell: bash
+        run: |
+          set +e
+          mkdir -p reports/pages-console-validation
+          python -m unittest \
+            tests.test_validate_publication_consumer_transition_fixture \
+            -v > reports/pages-console-validation/publication-consumer-transition-tests.txt 2>&1
+          test_status=$?
+          cat reports/pages-console-validation/publication-consumer-transition-tests.txt
+          validation_status=0
+          if [ "$test_status" -eq 0 ]; then
+            python scripts/validate_publication_consumer_transition_fixture.py \
+              --corpus fixtures/publication-consumer-transition-v1.json \
+              --report reports/pages-console-validation/publication-consumer-transition-report.json
+            validation_status=$?
+          fi
+          status=$(( test_status != 0 || validation_status != 0 ))
+          echo "status=${status}" >> "$GITHUB_OUTPUT"
+          exit "$status"
+
+      - name: Check local Markdown links
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import re
+          from pathlib import Path
+
+          roots = [Path("README.md"), *Path("docs").rglob("*.md")]
+          missing = []
+          pattern = re.compile(r"\[[^\]]+\]\(([^)]+)\)")
+          for source in roots:
+              text = source.read_text(encoding="utf-8")
+              for target in pattern.findall(text):
+                  if target.startswith(("http://", "https://", "mailto:", "#")):
+                      continue
+                  clean = target.split("#", 1)[0].split("?", 1)[0]
+                  if not clean:
+                      continue
+                  resolved = (source.parent / clean).resolve()
+                  if not resolved.exists():
+                      missing.append(f"{source}: {target}")
+          if missing:
+              raise SystemExit("Missing local links:\n" + "\n".join(missing))
+          PY
+
+      - name: Validate public portfolio safety
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+
+          forbidden = (
+              "BEGIN PRIVATE KEY",
+              "api_key=",
+              "access_token=",
+              "Authorization: Bearer",
+              "private device inventory",
+          )
+          sources = [
+              Path("docs/console/portfolio.json"),
+              Path("docs/console/index.html"),
+              Path("docs/console/app.js"),
+              Path("fixtures/publication-withdrawal-v1.json"),
+              Path("fixtures/publication-consumer-transition-v1.json"),
+          ]
+          findings = []
+          for source in sources:
+              text = source.read_text(encoding="utf-8")
+              for marker in forbidden:
+                  if marker in text:
+                      findings.append(f"{source}: forbidden marker {marker!r}")
+          if findings:
+              raise SystemExit("Publication-safety findings:\n" + "\n".join(findings))
+          PY
+
+      - name: Record validation evidence
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p reports/pages-console-validation
+          git rev-parse HEAD > reports/pages-console-validation/exact-head.txt
+          python --version > reports/pages-console-validation/python-version.txt 2>&1
+          {
+            printf 'publication_fixture_status=%s\n' "${{ steps.publication_fixture.outputs.status || 'not-run' }}"
+            printf 'transition_fixture_status=%s\n' "${{ steps.transition_fixture.outputs.status || 'not-run' }}"
+            printf 'accessibility_profile_status=documented-not-certified\n'
+            printf 'authority_effect=none\n'
+            printf 'publication_effect=none\n'
+            printf 'fixture_class=synthetic-only\n'
+          } > reports/pages-console-validation/run-summary.txt
+          sha256sum \
+            README.md \
+            taskchain.md \
+            punchlist.md \
+            release.md \
+            changelog.md \
+            docs/_config.yml \
+            docs/index.md \
+            docs/runtime-mode-topology.md \
+            docs/portable-trust-review-profile.md \
+            docs/accessibility-and-review-state.md \
+            docs/decisions/0001-host-shell-and-review-contract-boundary.md \
+            docs/obstruction-and-gluing.md \
+            docs/console/index.html \
+            docs/console/styles.css \
+            docs/console/app.js \
+            docs/console/portfolio.json \
+            fixtures/publication-withdrawal-v1.json \
+            fixtures/publication-consumer-transition-v1.json \
+            scripts/validate_publication_withdrawal_fixture.py \
+            scripts/validate_publication_consumer_transition_fixture.py \
+            tests/test_validate_publication_withdrawal_fixture.py \
+            tests/test_validate_publication_consumer_transition_fixture.py \
+            > reports/pages-console-validation/SHA256SUMS
+
+      - name: Upload validation evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: pages-console-validation-${{ env.EXPECTED_SHA }}
+          path: reports/pages-console-validation
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Fail when fixture validation is incomplete
+        if: always()
+        shell: bash
+        run: |
+          test "${{ steps.publication_fixture.outputs.status }}" = "0"
+          test "${{ steps.transition_fixture.outputs.status }}" = "0"

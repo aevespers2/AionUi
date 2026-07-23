@@ -1,0 +1,382 @@
+{
+  "corpus_id": "synthetic-publication-withdrawal-v1",
+  "fixtures": [
+    {
+      "accessibility": {
+        "diagram_present": true,
+        "text_alternative": true
+      },
+      "claim_id": "claim-synthetic-001",
+      "consumers": [
+        {
+          "id": "pages",
+          "reachable": true,
+          "state": "current"
+        },
+        {
+          "id": "review-ui",
+          "reachable": true,
+          "state": "current"
+        }
+      ],
+      "evidence_status": "current",
+      "expected": {
+        "disposition": "publishable",
+        "reason": "all-publication-gates-current"
+      },
+      "id": "current-publication",
+      "licensing_review": "approved",
+      "privacy_review": "approved",
+      "rollback": {
+        "attempted": false,
+        "reintroduces_withdrawn_claim": false
+      },
+      "surface_generation": "current",
+      "withdrawal": {
+        "completed_consumers": [],
+        "requested": false
+      }
+    },
+    {
+      "accessibility": {
+        "diagram_present": true,
+        "text_alternative": true
+      },
+      "claim_id": "claim-synthetic-002",
+      "consumers": [
+        {
+          "id": "pages",
+          "reachable": true,
+          "state": "stale"
+        },
+        {
+          "id": "review-ui",
+          "reachable": true,
+          "state": "current"
+        }
+      ],
+      "evidence_status": "current",
+      "expected": {
+        "disposition": "blocked",
+        "reason": "stale-publication-surface"
+      },
+      "id": "stale-surface",
+      "licensing_review": "approved",
+      "privacy_review": "approved",
+      "rollback": {
+        "attempted": false,
+        "reintroduces_withdrawn_claim": false
+      },
+      "surface_generation": "stale",
+      "withdrawal": {
+        "completed_consumers": [],
+        "requested": false
+      }
+    },
+    {
+      "accessibility": {
+        "diagram_present": true,
+        "text_alternative": true
+      },
+      "claim_id": "claim-synthetic-003",
+      "consumers": [
+        {
+          "id": "pages",
+          "reachable": true,
+          "state": "current"
+        },
+        {
+          "id": "review-ui",
+          "reachable": true,
+          "state": "current"
+        }
+      ],
+      "evidence_status": "expired",
+      "expected": {
+        "disposition": "blocked",
+        "reason": "expired-evidence"
+      },
+      "id": "expired-evidence",
+      "licensing_review": "approved",
+      "privacy_review": "approved",
+      "rollback": {
+        "attempted": false,
+        "reintroduces_withdrawn_claim": false
+      },
+      "surface_generation": "current",
+      "withdrawal": {
+        "completed_consumers": [],
+        "requested": false
+      }
+    },
+    {
+      "accessibility": {
+        "diagram_present": true,
+        "text_alternative": true
+      },
+      "claim_id": "claim-synthetic-004",
+      "consumers": [
+        {
+          "id": "pages",
+          "reachable": true,
+          "state": "withdrawn"
+        },
+        {
+          "id": "review-ui",
+          "reachable": true,
+          "state": "current"
+        }
+      ],
+      "evidence_status": "current",
+      "expected": {
+        "disposition": "blocked",
+        "reason": "partial-withdrawal"
+      },
+      "id": "partial-withdrawal",
+      "licensing_review": "approved",
+      "privacy_review": "approved",
+      "rollback": {
+        "attempted": false,
+        "reintroduces_withdrawn_claim": false
+      },
+      "surface_generation": "current",
+      "withdrawal": {
+        "completed_consumers": [
+          "pages"
+        ],
+        "requested": true
+      }
+    },
+    {
+      "accessibility": {
+        "diagram_present": true,
+        "text_alternative": true
+      },
+      "claim_id": "claim-synthetic-005",
+      "consumers": [
+        {
+          "id": "pages",
+          "reachable": true,
+          "state": "current"
+        },
+        {
+          "id": "review-ui",
+          "reachable": false,
+          "state": "unknown"
+        }
+      ],
+      "evidence_status": "current",
+      "expected": {
+        "disposition": "blocked",
+        "reason": "unreachable-consumer"
+      },
+      "id": "unreachable-consumer",
+      "licensing_review": "approved",
+      "privacy_review": "approved",
+      "rollback": {
+        "attempted": false,
+        "reintroduces_withdrawn_claim": false
+      },
+      "surface_generation": "current",
+      "withdrawal": {
+        "completed_consumers": [],
+        "requested": false
+      }
+    },
+    {
+      "accessibility": {
+        "diagram_present": true,
+        "text_alternative": false
+      },
+      "claim_id": "claim-synthetic-006",
+      "consumers": [
+        {
+          "id": "pages",
+          "reachable": true,
+          "state": "current"
+        },
+        {
+          "id": "review-ui",
+          "reachable": true,
+          "state": "current"
+        }
+      ],
+      "evidence_status": "current",
+      "expected": {
+        "disposition": "blocked",
+        "reason": "missing-accessible-alternative"
+      },
+      "id": "inaccessible-diagram",
+      "licensing_review": "approved",
+      "privacy_review": "approved",
+      "rollback": {
+        "attempted": false,
+        "reintroduces_withdrawn_claim": false
+      },
+      "surface_generation": "current",
+      "withdrawal": {
+        "completed_consumers": [],
+        "requested": false
+      }
+    },
+    {
+      "accessibility": {
+        "diagram_present": false,
+        "text_alternative": false
+      },
+      "claim_id": "claim-synthetic-007",
+      "consumers": [
+        {
+          "id": "pages",
+          "reachable": true,
+          "state": "current"
+        },
+        {
+          "id": "review-ui",
+          "reachable": true,
+          "state": "current"
+        }
+      ],
+      "evidence_status": "current",
+      "expected": {
+        "disposition": "blocked",
+        "reason": "privacy-review-rejected"
+      },
+      "id": "privacy-rejection",
+      "licensing_review": "approved",
+      "privacy_review": "rejected",
+      "rollback": {
+        "attempted": false,
+        "reintroduces_withdrawn_claim": false
+      },
+      "surface_generation": "current",
+      "withdrawal": {
+        "completed_consumers": [],
+        "requested": false
+      }
+    },
+    {
+      "accessibility": {
+        "diagram_present": false,
+        "text_alternative": false
+      },
+      "claim_id": "claim-synthetic-008",
+      "consumers": [
+        {
+          "id": "pages",
+          "reachable": true,
+          "state": "current"
+        },
+        {
+          "id": "review-ui",
+          "reachable": true,
+          "state": "current"
+        }
+      ],
+      "evidence_status": "current",
+      "expected": {
+        "disposition": "blocked",
+        "reason": "licensing-review-rejected"
+      },
+      "id": "licensing-rejection",
+      "licensing_review": "rejected",
+      "privacy_review": "approved",
+      "rollback": {
+        "attempted": false,
+        "reintroduces_withdrawn_claim": false
+      },
+      "surface_generation": "current",
+      "withdrawal": {
+        "completed_consumers": [],
+        "requested": false
+      }
+    },
+    {
+      "accessibility": {
+        "diagram_present": true,
+        "text_alternative": true
+      },
+      "claim_id": "claim-synthetic-009",
+      "consumers": [
+        {
+          "id": "pages",
+          "reachable": true,
+          "state": "withdrawn"
+        },
+        {
+          "id": "review-ui",
+          "reachable": true,
+          "state": "withdrawn"
+        }
+      ],
+      "evidence_status": "current",
+      "expected": {
+        "disposition": "blocked",
+        "reason": "rollback-reintroduces-withdrawn-claim"
+      },
+      "id": "rollback-reintroduces-withdrawn-claim",
+      "licensing_review": "approved",
+      "privacy_review": "approved",
+      "rollback": {
+        "attempted": true,
+        "reintroduces_withdrawn_claim": true
+      },
+      "surface_generation": "current",
+      "withdrawal": {
+        "completed_consumers": [
+          "pages",
+          "review-ui"
+        ],
+        "requested": true
+      }
+    },
+    {
+      "accessibility": {
+        "diagram_present": true,
+        "text_alternative": true
+      },
+      "claim_id": "claim-synthetic-010",
+      "consumers": [
+        {
+          "id": "pages",
+          "reachable": true,
+          "state": "withdrawn"
+        },
+        {
+          "id": "review-ui",
+          "reachable": true,
+          "state": "withdrawn"
+        }
+      ],
+      "evidence_status": "current",
+      "expected": {
+        "disposition": "withdrawn",
+        "reason": "withdrawal-complete"
+      },
+      "id": "complete-withdrawal",
+      "licensing_review": "approved",
+      "privacy_review": "approved",
+      "rollback": {
+        "attempted": false,
+        "reintroduces_withdrawn_claim": false
+      },
+      "surface_generation": "current",
+      "withdrawal": {
+        "completed_consumers": [
+          "pages",
+          "review-ui"
+        ],
+        "requested": true
+      }
+    }
+  ],
+  "prohibited_material": [
+    "private-subject-data",
+    "production-credentials",
+    "cryptographic-keys",
+    "raw-biometrics",
+    "private-incident-evidence"
+  ],
+  "schema_version": "qso-publication-withdrawal-corpus-v1",
+  "synthetic_only": true
+}

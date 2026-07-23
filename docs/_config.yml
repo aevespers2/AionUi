@@ -1,0 +1,20 @@
+title: AionUi Fork Documentation
+description: Architecture, runtime-mode topology, portable-trust review, obstruction analysis, onboarding, security, provenance, release controls, and a static portfolio console for the inherited AionUi 1.7.0 repository.
+theme: minima
+markdown: kramdown
+kramdown:
+  input: GFM
+header_pages:
+  - index.md
+  - architecture.md
+  - runtime-mode-topology.md
+  - portable-trust-review-profile.md
+  - decisions/0001-host-shell-and-review-contract-boundary.md
+  - obstruction-and-gluing.md
+  - development.md
+  - security-and-privacy.md
+  - fork-baseline.md
+include:
+  - console
+exclude:
+  - console/README.md

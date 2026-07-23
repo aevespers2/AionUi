@@ -1,0 +1,208 @@
+{
+  "schema_version": "qso-publication-consumer-transition-corpus-v1",
+  "corpus_id": "synthetic-publication-consumer-transition-v1",
+  "synthetic_only": true,
+  "prohibited_material": [
+    "private_subject_data",
+    "raw_biometrics",
+    "production_credentials",
+    "production_keys",
+    "production_capabilities",
+    "private_incident_or_recovery_records"
+  ],
+  "fixtures": [
+    {
+      "id": "current-consumer-set",
+      "claim_id": "synthetic:current-consumer-set",
+      "registry_generation": 1,
+      "current_contract_generation": 1,
+      "target_contract_generation": 1,
+      "required_consumers": ["pages", "readme"],
+      "consumers": [
+        {"id":"pages","reachable":true,"retired":false,"registry_generation":1,"claim_generation":1,"contract_generation":1,"state":"current","ack_status":"current"},
+        {"id":"readme","reachable":true,"retired":false,"registry_generation":1,"claim_generation":1,"contract_generation":1,"state":"current","ack_status":"current"}
+      ],
+      "event": {"kind":"current","generation":1,"correction_generation":null,"withdrawal_generation":null,"order":"none"},
+      "uncontrolled_copy_observed": false,
+      "retry": {"attempted":false,"idempotency_key_reused":true,"payload_equal":true},
+      "expected": {"disposition":"publishable","reason":"current-consumer-set"}
+    },
+    {
+      "id": "consumer-addition-unacknowledged",
+      "claim_id": "synthetic:consumer-addition-unacknowledged",
+      "registry_generation": 2,
+      "current_contract_generation": 1,
+      "target_contract_generation": 1,
+      "required_consumers": ["pages", "readme", "feed"],
+      "consumers": [
+        {"id":"pages","reachable":true,"retired":false,"registry_generation":2,"claim_generation":1,"contract_generation":1,"state":"current","ack_status":"current"},
+        {"id":"readme","reachable":true,"retired":false,"registry_generation":2,"claim_generation":1,"contract_generation":1,"state":"current","ack_status":"current"},
+        {"id":"feed","reachable":true,"retired":false,"registry_generation":2,"claim_generation":0,"contract_generation":1,"state":"unknown","ack_status":"missing"}
+      ],
+      "event": {"kind":"current","generation":1,"correction_generation":null,"withdrawal_generation":null,"order":"none"},
+      "uncontrolled_copy_observed": false,
+      "retry": {"attempted":false,"idempotency_key_reused":true,"payload_equal":true},
+      "expected": {"disposition":"blocked","reason":"missing-acknowledgment"}
+    },
+    {
+      "id": "consumer-removal-without-retirement",
+      "claim_id": "synthetic:consumer-removal-without-retirement",
+      "registry_generation": 2,
+      "current_contract_generation": 1,
+      "target_contract_generation": 1,
+      "required_consumers": ["pages"],
+      "consumers": [
+        {"id":"pages","reachable":true,"retired":false,"registry_generation":2,"claim_generation":1,"contract_generation":1,"state":"current","ack_status":"current"},
+        {"id":"old-feed","reachable":true,"retired":false,"registry_generation":1,"claim_generation":1,"contract_generation":1,"state":"current","ack_status":"current"}
+      ],
+      "event": {"kind":"current","generation":1,"correction_generation":null,"withdrawal_generation":null,"order":"none"},
+      "uncontrolled_copy_observed": false,
+      "retry": {"attempted":false,"idempotency_key_reused":true,"payload_equal":true},
+      "expected": {"disposition":"blocked","reason":"consumer-removal-without-retirement"}
+    },
+    {
+      "id": "concurrent-correction-then-withdrawal",
+      "claim_id": "synthetic:concurrent-correction-then-withdrawal",
+      "registry_generation": 1,
+      "current_contract_generation": 1,
+      "target_contract_generation": 1,
+      "required_consumers": ["pages", "readme"],
+      "consumers": [
+        {"id":"pages","reachable":true,"retired":false,"registry_generation":1,"claim_generation":4,"contract_generation":1,"state":"withdrawn","ack_status":"current"},
+        {"id":"readme","reachable":true,"retired":false,"registry_generation":1,"claim_generation":4,"contract_generation":1,"state":"withdrawn","ack_status":"current"}
+      ],
+      "event": {"kind":"concurrent","generation":4,"correction_generation":3,"withdrawal_generation":4,"order":"correction-before-withdrawal"},
+      "uncontrolled_copy_observed": false,
+      "retry": {"attempted":false,"idempotency_key_reused":true,"payload_equal":true},
+      "expected": {"disposition":"withdrawn","reason":"withdrawal-dominates-concurrent-correction"}
+    },
+    {
+      "id": "withdrawal-then-correction",
+      "claim_id": "synthetic:withdrawal-then-correction",
+      "registry_generation": 1,
+      "current_contract_generation": 1,
+      "target_contract_generation": 1,
+      "required_consumers": ["pages", "readme"],
+      "consumers": [
+        {"id":"pages","reachable":true,"retired":false,"registry_generation":1,"claim_generation":4,"contract_generation":1,"state":"current","ack_status":"current"},
+        {"id":"readme","reachable":true,"retired":false,"registry_generation":1,"claim_generation":4,"contract_generation":1,"state":"current","ack_status":"current"}
+      ],
+      "event": {"kind":"concurrent","generation":4,"correction_generation":4,"withdrawal_generation":3,"order":"withdrawal-before-correction"},
+      "uncontrolled_copy_observed": false,
+      "retry": {"attempted":false,"idempotency_key_reused":true,"payload_equal":true},
+      "expected": {"disposition":"blocked","reason":"fresh-approval-required-after-withdrawal"}
+    },
+    {
+      "id": "controlled-withdrawal-uncontrolled-copy",
+      "claim_id": "synthetic:controlled-withdrawal-uncontrolled-copy",
+      "registry_generation": 1,
+      "current_contract_generation": 1,
+      "target_contract_generation": 1,
+      "required_consumers": ["pages", "readme"],
+      "consumers": [
+        {"id":"pages","reachable":true,"retired":false,"registry_generation":1,"claim_generation":5,"contract_generation":1,"state":"withdrawn","ack_status":"current"},
+        {"id":"readme","reachable":true,"retired":false,"registry_generation":1,"claim_generation":5,"contract_generation":1,"state":"withdrawn","ack_status":"current"}
+      ],
+      "event": {"kind":"withdrawal","generation":5,"correction_generation":null,"withdrawal_generation":5,"order":"none"},
+      "uncontrolled_copy_observed": true,
+      "retry": {"attempted":false,"idempotency_key_reused":true,"payload_equal":true},
+      "expected": {"disposition":"withdrawn","reason":"withdrawal-complete-residual-uncontrolled-copy"}
+    },
+    {
+      "id": "idempotent-retry-after-ack-loss",
+      "claim_id": "synthetic:idempotent-retry-after-ack-loss",
+      "registry_generation": 1,
+      "current_contract_generation": 1,
+      "target_contract_generation": 1,
+      "required_consumers": ["pages", "readme"],
+      "consumers": [
+        {"id":"pages","reachable":true,"retired":false,"registry_generation":1,"claim_generation":2,"contract_generation":1,"state":"current","ack_status":"current"},
+        {"id":"readme","reachable":true,"retired":false,"registry_generation":1,"claim_generation":2,"contract_generation":1,"state":"current","ack_status":"current"}
+      ],
+      "event": {"kind":"correction","generation":2,"correction_generation":2,"withdrawal_generation":null,"order":"none"},
+      "uncontrolled_copy_observed": false,
+      "retry": {"attempted":true,"idempotency_key_reused":true,"payload_equal":true},
+      "expected": {"disposition":"publishable","reason":"idempotent-retry-accepted"}
+    },
+    {
+      "id": "conflicting-retry-payload",
+      "claim_id": "synthetic:conflicting-retry-payload",
+      "registry_generation": 1,
+      "current_contract_generation": 1,
+      "target_contract_generation": 1,
+      "required_consumers": ["pages", "readme"],
+      "consumers": [
+        {"id":"pages","reachable":true,"retired":false,"registry_generation":1,"claim_generation":2,"contract_generation":1,"state":"current","ack_status":"current"},
+        {"id":"readme","reachable":true,"retired":false,"registry_generation":1,"claim_generation":2,"contract_generation":1,"state":"current","ack_status":"current"}
+      ],
+      "event": {"kind":"correction","generation":2,"correction_generation":2,"withdrawal_generation":null,"order":"none"},
+      "uncontrolled_copy_observed": false,
+      "retry": {"attempted":true,"idempotency_key_reused":true,"payload_equal":false},
+      "expected": {"disposition":"blocked","reason":"non-idempotent-retry"}
+    },
+    {
+      "id": "contract-generation-migration-complete",
+      "claim_id": "synthetic:contract-generation-migration-complete",
+      "registry_generation": 1,
+      "current_contract_generation": 1,
+      "target_contract_generation": 2,
+      "required_consumers": ["pages", "readme"],
+      "consumers": [
+        {"id":"pages","reachable":true,"retired":false,"registry_generation":1,"claim_generation":1,"contract_generation":2,"state":"current","ack_status":"current"},
+        {"id":"readme","reachable":true,"retired":false,"registry_generation":1,"claim_generation":1,"contract_generation":2,"state":"current","ack_status":"current"}
+      ],
+      "event": {"kind":"current","generation":1,"correction_generation":null,"withdrawal_generation":null,"order":"none"},
+      "uncontrolled_copy_observed": false,
+      "retry": {"attempted":false,"idempotency_key_reused":true,"payload_equal":true},
+      "expected": {"disposition":"publishable","reason":"fixture-generation-migration-complete"}
+    },
+    {
+      "id": "contract-generation-migration-partial",
+      "claim_id": "synthetic:contract-generation-migration-partial",
+      "registry_generation": 1,
+      "current_contract_generation": 1,
+      "target_contract_generation": 2,
+      "required_consumers": ["pages", "readme"],
+      "consumers": [
+        {"id":"pages","reachable":true,"retired":false,"registry_generation":1,"claim_generation":1,"contract_generation":2,"state":"current","ack_status":"current"},
+        {"id":"readme","reachable":true,"retired":false,"registry_generation":1,"claim_generation":1,"contract_generation":1,"state":"current","ack_status":"current"}
+      ],
+      "event": {"kind":"current","generation":1,"correction_generation":null,"withdrawal_generation":null,"order":"none"},
+      "uncontrolled_copy_observed": false,
+      "retry": {"attempted":false,"idempotency_key_reused":true,"payload_equal":true},
+      "expected": {"disposition":"blocked","reason":"partial-fixture-generation-migration"}
+    },
+    {
+      "id": "stale-acknowledgment",
+      "claim_id": "synthetic:stale-acknowledgment",
+      "registry_generation": 1,
+      "current_contract_generation": 1,
+      "target_contract_generation": 1,
+      "required_consumers": ["pages", "readme"],
+      "consumers": [
+        {"id":"pages","reachable":true,"retired":false,"registry_generation":1,"claim_generation":2,"contract_generation":1,"state":"current","ack_status":"current"},
+        {"id":"readme","reachable":true,"retired":false,"registry_generation":1,"claim_generation":1,"contract_generation":1,"state":"current","ack_status":"stale"}
+      ],
+      "event": {"kind":"correction","generation":2,"correction_generation":2,"withdrawal_generation":null,"order":"none"},
+      "uncontrolled_copy_observed": false,
+      "retry": {"attempted":false,"idempotency_key_reused":true,"payload_equal":true},
+      "expected": {"disposition":"blocked","reason":"stale-acknowledgment"}
+    },
+    {
+      "id": "replayed-acknowledgment",
+      "claim_id": "synthetic:replayed-acknowledgment",
+      "registry_generation": 1,
+      "current_contract_generation": 1,
+      "target_contract_generation": 1,
+      "required_consumers": ["pages", "readme"],
+      "consumers": [
+        {"id":"pages","reachable":true,"retired":false,"registry_generation":1,"claim_generation":1,"contract_generation":1,"state":"current","ack_status":"current"},
+        {"id":"readme","reachable":true,"retired":false,"registry_generation":1,"claim_generation":1,"contract_generation":1,"state":"current","ack_status":"replayed"}
+      ],
+      "event": {"kind":"current","generation":1,"correction_generation":null,"withdrawal_generation":null,"order":"none"},
+      "uncontrolled_copy_observed": false,
+      "retry": {"attempted":false,"idempotency_key_reused":true,"payload_equal":true},
+      "expected": {"disposition":"blocked","reason":"replayed-acknowledgment"}
+    }
+  ]
+}

@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <title>AionUi Portfolio Console</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="shell">
+    <aside class="sidebar" aria-label="Primary navigation">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">A</div>
+        <div><strong>AionUi</strong><span>Portfolio Console</span></div>
+      </div>
+      <nav>
+        <button class="nav-item active" data-view="overview">Overview</button>
+        <button class="nav-item" data-view="repositories">Repositories</button>
+        <button class="nav-item" data-view="architecture">Architecture</button>
+        <button class="nav-item" data-view="activity">Activity</button>
+        <button class="nav-item" data-view="settings">Connections</button>
+      </nav>
+      <div class="boundary">
+        <strong>Static Pages mode</strong>
+        <span>No shell, credentials, filesystem, model execution, or repository writes.</span>
+      </div>
+    </aside>
+
+    <main id="main">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">QSO ecosystem workspace</p>
+          <h1 id="view-title">Portfolio overview</h1>
+        </div>
+        <div class="top-actions">
+          <span id="connection-state" class="status neutral">Static mode</span>
+          <button id="refresh" class="button">Refresh public metadata</button>
+        </div>
+      </header>
+
+      <section id="overview" class="view active-view" aria-labelledby="view-title">
+        <div class="hero panel">
+          <div>
+            <p class="eyebrow">Browser-safe demonstration surface</p>
+            <h2>One interface for the active engineering portfolio</h2>
+            <p>This GitHub Pages console wires AionUi's visual shell to public repository metadata, documentation, architecture maps, and bounded integration points. Privileged features remain disabled until a separately hosted, authenticated backend is approved.</p>
+          </div>
+          <div class="hero-actions">
+            <a class="button primary" href="../index.html">Open documentation</a>
+            <a class="button" href="https://github.com/aevespers2/AionUi">View source</a>
+          </div>
+        </div>
+
+        <div class="metrics" id="metrics" aria-label="Portfolio summary"></div>
+
+        <div class="grid two">
+          <article class="panel">
+            <div class="panel-heading"><h2>Repository map</h2><span class="muted">Public read-only links</span></div>
+            <div id="featured-repositories" class="repo-list"></div>
+          </article>
+          <article class="panel">
+            <div class="panel-heading"><h2>Capability boundary</h2></div>
+            <ul class="capability-list">
+              <li><span class="dot allowed"></span><div><strong>Available</strong><p>Public GitHub metadata, documentation navigation, architecture references, static portfolio configuration.</p></div></li>
+              <li><span class="dot planned"></span><div><strong>Adapter-ready</strong><p>Authenticated read APIs, workflow summaries, evidence artifacts, issue and pull-request views.</p></div></li>
+              <li><span class="dot blocked"></span><div><strong>Disabled on Pages</strong><p>Electron IPC, local files, SQLite, CLI agents, MCP processes, secrets, model calls, writes, releases, and deployments.</p></div></li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section id="repositories" class="view" hidden>
+        <div class="panel toolbar">
+          <label>Filter repositories <input id="repo-filter" type="search" placeholder="Search name, role, or status"></label>
+          <span id="repo-count" class="muted"></span>
+        </div>
+        <div id="repository-grid" class="grid cards"></div>
+      </section>
+
+      <section id="architecture" class="view" hidden>
+        <article class="panel prose">
+          <p class="eyebrow">Integration topology</p>
+          <h2>Static shell now, bounded service adapters later</h2>
+          <div class="architecture-flow" aria-label="Architecture flow">
+            <div>GitHub Pages UI</div><span>→</span><div>Read-only public metadata</div><span>→</span><div>Portfolio documentation</div>
+            <div class="future">Future authenticated UI</div><span>→</span><div class="future">Gateway / policy service</div><span>→</span><div class="future">Approved repository and QSO adapters</div>
+          </div>
+          <h3>Deployment rule</h3>
+          <p>GitHub Pages hosts only immutable static assets. Any backend must be independently deployed with authentication, explicit CORS origins, least-privilege credentials, audit logging, rate limits, and deny-by-default action policy.</p>
+          <h3>Recommended adapter sequence</h3>
+          <ol>
+            <li>Public repository and documentation reads.</li>
+            <li>Authenticated evidence and workflow reads.</li>
+            <li>Reviewable draft actions with no automatic execution.</li>
+            <li>Explicitly approved writes through a policy gateway.</li>
+          </ol>
+        </article>
+      </section>
+
+      <section id="activity" class="view" hidden>
+        <article class="panel">
+          <div class="panel-heading"><h2>Session activity</h2><span class="muted">Local browser log only</span></div>
+          <div id="activity-log" class="activity-log"></div>
+        </article>
+      </section>
+
+      <section id="settings" class="view" hidden>
+        <article class="panel prose">
+          <p class="eyebrow">Connection configuration</p>
+          <h2>Backend adapter seam</h2>
+          <p>The console currently uses the public GitHub REST API without credentials. A future backend endpoint can be configured only after its identity, authorization, privacy, logging, and rollback model are approved.</p>
+          <label>Approved API base URL <input id="api-base" type="url" placeholder="https://gateway.example.invalid" disabled></label>
+          <p class="notice">Disabled by design in this milestone. No tokens are stored in localStorage, query strings, or the repository.</p>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <noscript>This console requires JavaScript for repository cards and navigation.</noscript>
+  <script src="./app.js" defer></script>
+</body>
+</html>
