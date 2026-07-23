@@ -35,7 +35,8 @@ A parallel documentation objective defines AionUi's bounded portfolio role:
 4. treat AionUi as an optional host shell rather than the review-contract or canonical-state authority;
 5. bind device, workspace, repository, commit, platform profile, policy profile, and executor identities independently;
 6. keep static Pages, desktop, local WebUI, remote WebUI, and packaging as separate trust and release profiles;
-7. fail closed for stale, replayed, unsupported, private, revoked, partial, or unverifiable state.
+7. fail closed for stale, replayed, unsupported, private, revoked, partial, or unverifiable state;
+8. make freshness, completeness, privacy, correction, revocation, recovery, and authority class perceivable without relying on color, animation, pointer precision, or implied workflow position.
 
 New AI-provider features, rebranding, public binaries, privileged portable-trust adapters, and broad cross-platform claims remain outside the approved scope until the applicable gates are complete.
 
@@ -47,6 +48,7 @@ New AI-provider features, rebranding, public binaries, privileged portable-trust
 | [Architecture](architecture.md) | Runtime processes, adapters, data flows, storage, WebUI, packaging, and trust boundaries |
 | [Runtime-mode topology](runtime-mode-topology.md) | Separate static Pages, Electron desktop, local WebUI, remote WebUI, and packaging allowlists, evidence, and recovery boundaries |
 | [Portable trust review profile](portable-trust-review-profile.md) | Candidate read-only display role for device observations, proposals, dispositions, capabilities, receipts, corrections, revocations, and recovery |
+| [Accessibility and review-state assurance](accessibility-and-review-state.md) | Keyboard, focus, zoom/reflow, screen-reader, state-semantics, privacy, correction, revocation, and recovery review requirements |
 | [ADR-0001: host shell and review contract](decisions/0001-host-shell-and-review-contract-boundary.md) | Candidate agreement that QSO-STUDIO owns neutral review semantics while AionUi remains an optional non-authoritative host shell |
 | [Obstruction and gluing analysis](obstruction-and-gluing.md) | Cross-repository incompatibilities, pairwise maps, triple-overlap witnesses, and fail-closed fixtures |
 | [Developer onboarding](development.md) | Clean setup, commands, verification workflow, contribution discipline, and evidence capture |
@@ -124,7 +126,8 @@ These modes are inherited capabilities or bounded documentation demonstrations, 
 - Keep the Pages console read-only, public-data-only, and credential-free.
 - Do not treat display, selection, annotation, export, delivery, authentication, or execution success as canonical approval.
 - Do not allow an inherited process, provider, agent, or filesystem bridge to become ambient authority for a review adapter.
-- Stop when the requested change depends on an unresolved fork identity, review-contract owner, capability authority, runtime topology, or distribution decision.
+- Make critical review states and authority classes available as visible text and assistive-technology-readable text; color, icons, animation, or pointer interaction may only reinforce meaning.
+- Stop when the requested change depends on an unresolved fork identity, review-contract owner, capability authority, runtime topology, accessibility result, or distribution decision.
 
 ## Baseline release gates
 
@@ -136,7 +139,7 @@ A candidate remains blocked until all of the following are evidenced at one immu
 - lint, format, unit, contract, integration, and primary-workflow smoke results;
 - one reproducible platform build or package;
 - Electron, WebUI, credential, storage, network, parser, updater, dependency, secret, and workflow review;
-- keyboard, focus, label, contrast, scaling, and error-state accessibility review;
+- keyboard, focus, label, contrast, scaling, reflow, reduced-motion, screen-reader, error-state, and state-semantics accessibility review for every included mode;
 - neutral review/display contract and QSO-STUDIO compatibility decision for any portable-trust adapter;
 - accepted mode-specific data, adapter, credential, network, storage, incident, and recovery profiles;
 - privacy, correction, revocation, emergency-stop, cache invalidation, and recovery fixtures;
@@ -144,4 +147,4 @@ A candidate remains blocked until all of the following are evidenced at one immu
 
 ## Documentation status
 
-This site documents the observed inherited architecture and the controls required to evaluate it. The static console is a safe demonstration and integration scaffold; it does **not** approve a fork identity, certify security, promise support for a platform, authorize backend connections, activate portable-trust review, grant approval authority, or authorize distribution.
+This site documents the observed inherited architecture and the controls required to evaluate it. The static console is a safe demonstration and integration scaffold; it does **not** approve a fork identity, certify accessibility or security, promise support for a platform, authorize backend connections, activate portable-trust review, grant approval authority, or authorize distribution.

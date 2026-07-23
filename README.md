@@ -36,6 +36,7 @@ A permission or feature present in one mode does not transfer automatically to a
 - [Architecture](docs/architecture.md)
 - [Runtime-mode topology](docs/runtime-mode-topology.md)
 - [Portable-trust review profile](docs/portable-trust-review-profile.md)
+- [Accessibility and review-state assurance](docs/accessibility-and-review-state.md)
 - [ADR-0001: host shell and review contract](docs/decisions/0001-host-shell-and-review-contract-boundary.md)
 - [Obstruction and gluing analysis](docs/obstruction-and-gluing.md)
 - [Developer onboarding](docs/development.md)
@@ -56,8 +57,9 @@ Before an application candidate is eligible, the repository must have:
 4. Electron, WebUI, filesystem, process, provider, credential, storage, updater, accessibility, and supply-chain review;
 5. accepted QSO-STUDIO/AionUi contract boundary and runtime-mode policies;
 6. shared positive and fail-closed compatibility fixtures;
-7. SBOM, checksums, signing status, provenance, incident response, recovery, and rollback evidence;
-8. explicit human approval for the exact immutable candidate.
+7. exact-artifact keyboard, focus, zoom/reflow, screen-reader, reduced-motion, state-semantics, privacy, and recovery evidence for every included mode;
+8. SBOM, checksums, signing status, provenance, incident response, recovery, and rollback evidence;
+9. explicit human approval for the exact immutable candidate.
 
 ## Scope boundary
 
