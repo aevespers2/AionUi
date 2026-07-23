@@ -78,6 +78,7 @@ jobs:
           test -f docs/architecture.md
           test -f docs/runtime-mode-topology.md
           test -f docs/portable-trust-review-profile.md
+          test -f docs/accessibility-and-review-state.md
           test -f docs/decisions/0001-host-shell-and-review-contract-boundary.md
           test -f docs/obstruction-and-gluing.md
           test -f docs/development.md
@@ -96,9 +97,10 @@ jobs:
           grep -q 'fork and distribution review' README.md
           grep -q 'Static Pages mode' docs/console/index.html
           grep -q 'api.github.com/repos' docs/console/app.js
-          grep -q 'BLOCKED — FORK, REVIEW-ROLE, RUNTIME-MODE, AND DISTRIBUTION APPROVAL REQUIRED' release.md
+          grep -q 'BLOCKED — FORK, REVIEW-ROLE, RUNTIME-MODE, ACCESSIBILITY-EVIDENCE, AND DISTRIBUTION APPROVAL REQUIRED' release.md
           grep -q 'P0.*BLOCKED' taskchain.md
           grep -q 'Display is not authority' docs/portable-trust-review-profile.md
+          grep -q 'Epistemic and authority-state accessibility assurance' docs/accessibility-and-review-state.md
           grep -q 'AUI-O18' docs/obstruction-and-gluing.md
           grep -q 'QSO-STUDIO owns the candidate domain-neutral review contract' docs/decisions/0001-host-shell-and-review-contract-boundary.md
           grep -q 'Remote WebUI remains blocked' docs/runtime-mode-topology.md
@@ -218,6 +220,7 @@ jobs:
           {
             printf 'publication_fixture_status=%s\n' "${{ steps.publication_fixture.outputs.status || 'not-run' }}"
             printf 'transition_fixture_status=%s\n' "${{ steps.transition_fixture.outputs.status || 'not-run' }}"
+            printf 'accessibility_profile_status=documented-not-certified\n'
             printf 'authority_effect=none\n'
             printf 'publication_effect=none\n'
             printf 'fixture_class=synthetic-only\n'
@@ -232,6 +235,7 @@ jobs:
             docs/index.md \
             docs/runtime-mode-topology.md \
             docs/portable-trust-review-profile.md \
+            docs/accessibility-and-review-state.md \
             docs/decisions/0001-host-shell-and-review-contract-boundary.md \
             docs/obstruction-and-gluing.md \
             docs/console/index.html \
